@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/book_collect_layout_margin_size"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/book_collect_layout_splitline_size"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- show some items about the book,like title,author,isbn -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/book_collect_layout_splitline_size"
+                    android:text="@string/book_title"
+                    android:textSize="@dimen/search_book_result_font_size" >
+                </TextView>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/book_collect_layout_splitline_size"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/author"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/book_collect_layout_splitline_size"
+                    android:text="@string/book_author"
+                    android:textSize="@dimen/search_book_result_font_size" >
+                </TextView>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/book_collect_layout_splitline_size"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/isbn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/isbn"
+                    android:textSize="@dimen/search_book_result_font_size" >
+                </TextView>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/book_collect_layout_splitline_size"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    android:textSize="@dimen/search_book_result_font_size" >
+                </TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="@dimen/book_collect_layout_splitline_size"
+                android:layout_height="fill_parent"
+                android:background="@color/gray" />
+            <!-- the layout to show picture of book -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/book_cover"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/book_img" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/book_collect_layout_splitline_size"
+            android:background="@color/gray" />
+        <!-- summary about this book -->
+
+        <TextView
+            android:id="@+id/summary"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/book_collect_layout_splitline_size"
+            android:text="@string/book_summary"
+            android:textSize="@dimen/search_book_result_font_size" >
+        </TextView>
+    </LinearLayout>
+	
+</ScrollView>

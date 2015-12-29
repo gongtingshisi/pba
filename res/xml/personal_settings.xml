@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="list_category_key"
+        android:summary="list_category_summary"
+        android:title="设置组" >
+        <ListPreference
+            android:defaultValue="list_default"
+            android:entries="@array/tab"
+            android:entryValues="@array/tab"
+            android:icon="@drawable/setting"
+            android:key="list_key"
+            android:summary="设置显示阅读历史的默认缩放大小"
+            android:title="设置缩放大小" >
+        </ListPreference>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:icon="@drawable/composer_sleep"
+            android:key="swich"
+            android:summary="switch summary"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="checkbox" >
+        </CheckBoxPreference>
+
+        <SwitchPreference
+            android:icon="@drawable/composer_sleep"
+            android:key="simple_style"
+            android:summary="这样就可以使用自定义功能模式"
+            android:title="打开自定义模式" >
+        </SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="其他" >
+        <EditTextPreference
+            android:icon="@drawable/composer_with"
+            android:summary="输入名字"
+            android:title="edit" >
+        </EditTextPreference>
+
+        <SwitchPreference
+            android:icon="@drawable/composer_place"
+            android:summary="switch"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="打开自动定位" >
+        </SwitchPreference>
+
+        <RingtonePreference
+            android:icon="@drawable/composer_place"
+            android:key="ringtone"
+            android:ringtoneType="all"
+            android:showSilent="true"
+            android:summary="选择一个提醒铃声"
+            android:title="设置铃声" >
+        </RingtonePreference>
+
+        <CheckBoxPreference
+            android:icon="@drawable/composer_with"
+            android:key="self_update"
+            android:summary="打开后会自动更新安装,使用最新的功能"
+            android:title="自动更新" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

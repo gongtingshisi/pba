@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kg.gtss.personalbooksassitant"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- 微信登录开发者帐号 zhangfeng1990128@126.com -->
+    <!--
+Certificate fingerprints:
+MD5 : 98:9F:F0:E7:53:7E:7F:D0:C0:C5:F1:7B:79:ED:29:CB
+SHA1: 65:38:79:16:16:70:17:DD:1D:FA:54:8F:F3:07:FE:1E:16:7B:87:67
+    -->
+    <!-- zxing begin -->
+    <uses-permission android:name="android.permission.CAMERA" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.screen.portrait" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi.direct"
+        android:required="true" />
+
+    <!-- zxing end -->
+
+
+    <!-- baidu map permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- for baidu map sdk begin -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- for baidu map sdk end -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- <uses-permission android:name="android.permission.ACCOUNT_MANAGER" > -->
+    <uses-permission android:name="android.permission.MANAGE_USERS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <!-- TODO replace above two with next line after Android 4.2 -->
+    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="18" />
+
+    <!-- android:theme="@android:style/Theme.Holo.Light" -->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- baidu map sdk ak: wDaRy1xdIGnh0xXVLFcVSqs0 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="wDaRy1xdIGnh0xXVLFcVSqs0" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+        <!-- why? -->
+        <meta-data
+            android:name="andorid.app.default_searchable"
+            android:value="kg.gtss.search.SearchActivity" />
+
+        <activity
+            android:name="kg.gtss.personalbooksassitant.PbaMain"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--
+            response onSearchRequested() to show search bar .to avoid re-new this activity ,
+            we declare android:launchMode="singleTop" after received SEARCH action
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" >
+                </action>
+            </intent-filter>
+            <!-- startSearch() to start searching ,onNewIntent() to handle the search action -->
+            <!-- request to search -->
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="kg.gtss.search.SearchResultListActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" >
+            </meta-data>
+        </activity>
+
+        <!-- show search result -->
+        <activity android:name="kg.gtss.search.SearchResultListActivity" >
+        </activity>
+
+        <!-- android:theme="@android:style/Theme.Holo.NoActionBar" -->
+        <activity android:name="kg.gtss.personalbooksassitant.SingleBookDetailActivity" />
+        <activity android:name="kg.gtss.personalbooksassitant.FullDisplayPictureActivity" />
+        <activity android:name="com.gtss.useraccount.UserAccountActivity" />
+        <activity android:name="com.gtss.useraccount.LocalAccountAuthenticatorActivity" />
+
+        <!-- The authenticator service -->
+        <service
+            android:name="com.gtss.useraccount.AuthenticationService"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <provider
+            android:name="kg.gtss.search.SearchSuggestProvider"
+            android:authorities="kg.gtss.searchSuggestProvider" />
+        <provider
+            android:name="com.gtss.douban.DouBanContentProvider"
+            android:authorities="kg.gtss.personalbooksassitant.douban"
+            android:exported="false" />
+
+        <activity android:name="UserAccountActivity" />
+        <activity
+            android:name="com.laomo.zxing.CaptureActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true" >
+            <intent-filter>
+                <action android:name="com.google.zxing.client.android.SCAN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.gtss.login.DouBanAuthorization" />
+        <activity android:name="com.progress.bookreading.ReadingProgressActivity" />
+        <activity android:name="GridViewEntryActivity" />
+        <activity android:name="TabViewEntryActivity" />
+        <activity android:name="PersonalSettingsActivity" />
+        <activity android:name="kg.gtss.alarm.AddReadingAlarm" />
+        <activity android:name="FriendNewsActivity" />
+        <activity android:name="FavoriteBooksActivity" />
+        <activity android:name="AllBooksActivity" />
+        <activity android:name="ReadingNotesActivity" />
+        <activity android:name="BookcaseActivity" />
+        <activity android:name="CommunityActivity" />
+        <activity android:name="LastReadBookActivity" />
+        <activity android:name="backuprestore.BackupRestoreActivity" />
+        <activity android:name="syncdatap2p.SyncDataP2pActivity" />
+        <activity android:name="kg.gtss.alarm.AddAlarm" />
+        <activity android:name="WebPageActivity" />
+        <activity android:name="OnlineBookShopActivity" />
+
+        <provider
+            android:name="com.progress.bookreading.ReadingRecordProvider"
+            android:authorities="kg.gtss.personalbooksassitant.ReadingRecordProvider"
+            android:exported="false" />
+    </application>
+
+</manifest>

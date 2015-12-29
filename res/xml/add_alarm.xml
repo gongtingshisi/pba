@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/composer_music"
+        android:key="switch"
+        android:title="@string/on" >
+    </SwitchPreference>
+    <!--
+    <MultiSelectListPreference
+        android:entries="@array/days"
+        android:entryValues="@array/day_value"
+        android:key="repeat"
+        android:title="@string/repeat" />
+    -->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/composer_music"
+        android:key="vibrate"
+        android:title="@string/vibrate" >
+    </SwitchPreference>
+
+    <EditTextPreference
+        android:dialogTitle="@string/comment"
+        android:icon="@drawable/composer_music"
+        android:key="comment"
+        android:title="@string/comment" >
+    </EditTextPreference>
+
+</PreferenceScreen>

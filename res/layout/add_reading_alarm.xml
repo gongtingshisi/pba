@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gtss="http://schemas.android.com/apk/res/kg.gtss.personalbooksassitant"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/add_alarm_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:scrollbars="none" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="8"
+        android:orientation="horizontal" >
+
+        <kg.gtss.personalbooksassitant.TabSubView
+            android:id="@+id/add_alarm_add_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            gtss:reading_alarm_button_image="@drawable/add"
+            gtss:reading_alarm_button_text="@string/add_alarm" >
+        </kg.gtss.personalbooksassitant.TabSubView>
+        <!--
+        <kg.gtss.personalbooksassitant.TabSubView
+            android:id="@+id/add_alarm_settings_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            gtss:reading_alarm_button_image="@drawable/setting"
+            gtss:reading_alarm_button_text="@string/settings" >
+        </kg.gtss.personalbooksassitant.TabSubView>
+        -->
+    </LinearLayout>
+
+</LinearLayout>

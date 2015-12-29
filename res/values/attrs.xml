@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 自定义密码输入框属性 -->
+    <declare-styleable name="PasswordInputView">
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="borderRadius" format="dimension" />
+        <attr name="passwordLength" format="integer" />
+        <attr name="passwordWidth" format="dimension" />
+        <attr name="passwordColor" format="color" />
+        <attr name="passwordRadius" format="dimension" />
+        <attr name="defaultContMargin" format="dimension"></attr>
+        <attr name="defaultSplitLineWidth" format="dimension"></attr>
+    </declare-styleable>
+
+    <!-- 阅读趋势图: ,线条颜色,阅读节点半径,阅读节点颜色 -->
+    <declare-styleable name="reading_trend_chart">
+
+        <!-- 刻度文本颜色 -->
+        <attr name="rulerColor" format="color|reference"></attr>
+        <!-- 背景网格颜色 -->
+        <attr name="readingProgressBgColor" format="color|reference"></attr>
+        <!-- 折线颜色 -->
+        <attr name="trendColor" format="color|reference"></attr>
+        <!-- 折点半径 -->
+        <attr name="readingPointRadius" format="dimension"></attr>
+        <!-- 折点颜色 -->
+        <attr name="readingPointColor" format="color|reference"></attr>
+        <!-- 折点提示数字颜色,代表阅读页数 -->
+        <attr name="readingNumberColor" format="color|reference"></attr>
+        <!-- 折线绘制宽度 -->
+        <attr name="trendWidth" format="dimension"></attr>
+        <!-- scale,日期绘制大小 -->
+        <attr name="textsize" format="dimension"></attr>
+        <!-- 折点(阅读页数)字体大小 -->
+        <attr name="smalltextsize" format="dimension"></attr>
+        <!-- 绘制过程中预留给四侧的空白 -->
+        <attr name="gap" format="dimension"></attr>
+        <!-- 绘制垂直方向的行数 -->
+        <attr name="linenum" format="integer"></attr>
+    </declare-styleable>
+
+    <!-- 用于提供给增阅读闹钟界面下方的按钮 -->
+    <declare-styleable name="reading_alarm_button">
+        <attr name="reading_alarm_button_image" format="reference"></attr>
+        <attr name="reading_alarm_button_text" format=" reference"></attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,53 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- the smaller is android:orderInCategory,the fronter the actionbar. ifRoom means if tio-corner has no room,system put it menu-bar -->
+
+
+    <!-- Search always be diplayed on ActionBar.android:actionViewClass="android.widget.SearchView" -->
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="10"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/search"/>
+
+    <!-- Share if we have room enough,we display Share on actionbar on right-top corner -->
+    <item
+        android:id="@+id/action_share"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:orderInCategory="20"
+        android:showAsAction="ifRoom"
+        android:title="@string/share">
+    </item>
+    <item
+        android:id="@+id/action_scan"
+        android:orderInCategory="25"
+        android:showAsAction="ifRoom"
+        android:title="@string/scan_books">
+    </item>
+    <!-- android:enabled="false" -->
+
+
+    <!-- About if room ,we display it on ActionBar -->
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="30"
+        android:showAsAction="ifRoom"
+        android:title="@string/about">
+    </item>
+
+    <!-- login -->
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="90"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/login"/>
+
+    <!-- Settings must be on Menu instead of ActionBar or LongPressMenu -->
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+</menu>

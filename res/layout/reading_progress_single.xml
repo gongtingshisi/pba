@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gtss="http://schemas.android.com/apk/res/kg.gtss.personalbooksassitant"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.progress.bookreading.ReadingProgressGridView
+        android:id="@+id/readingProgressGridView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        gtss:gap="@dimen/gap"
+        gtss:linenum="@integer/linenum"
+        gtss:readingNumberColor="@color/navy"
+        gtss:readingPointColor="@color/powderblue"
+        gtss:readingPointRadius="@dimen/radius_reading_point"
+        gtss:readingProgressBgColor="@color/navajowhite"
+        gtss:rulerColor="@color/darkorchid"
+        gtss:smalltextsize="@dimen/smalltextsize"
+        gtss:textsize="@dimen/textsize"
+        gtss:trendColor="@color/deeppink"
+        gtss:trendWidth="@dimen/trendWidth" >
+    </com.progress.bookreading.ReadingProgressGridView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="6"
+        android:divider="@color/grey"
+        android:dividerPadding="2dp"
+        android:orientation="horizontal" >
+
+        <com.progress.bookreading.CircleImageButton
+            android:id="@+id/settings"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/reading_trend_bg"
+            android:clickable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/setting" />
+
+        <com.progress.bookreading.CircleImageButton
+            android:id="@+id/add"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/reading_trend_bg"
+            android:clickable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/add" />
+    </LinearLayout>
+
+</LinearLayout>

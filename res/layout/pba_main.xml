@@ -1,0 +1,115 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:context=".PbaMain" >
+
+        <!-- This title strip will display the currently visible page title, as well as the page titles for adjacent pages. -->
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:background="@color/darkgrey"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:textColor="#fff" />
+    </android.support.v4.view.ViewPager>
+    <!-- 右下角点击展开出现的快捷键按钮，分别为photo,people,place,thought ，另外需要关注下点击时动画效果，缺点是使用了绝对数字，会在不同的手机上显示不同效果 -->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/activity_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!-- android:clipChildren="false"设置子view在其范围内，默认为true。 -->
+
+        <RelativeLayout
+            android:id="@+id/composer_buttons_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:clipChildren="false"
+            android:clipToPadding="false" >
+
+            <!-- 默认是gone的 -->
+            <!-- scan books -->
+
+            <ImageButton
+                android:id="@+id/composer_button_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="142dp"
+                android:layout_marginRight="10.667dp"
+                android:background="@drawable/composer_camera"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/composer_button_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="122.975607dp"
+                android:layout_marginRight="81.607dp"
+                android:background="@drawable/composer_with"
+                android:visibility="gone" />
+            <!-- search nearby -->
+
+            <ImageButton
+                android:id="@+id/composer_button_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="75.666666666666667dp"
+                android:layout_marginRight="124.70765814495902dp"
+                android:background="@drawable/composer_place"
+                android:visibility="gone" />
+            <!-- reading progress -->
+
+            <ImageButton
+                android:id="@+id/composer_button_thought"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8.666666666666667dp"
+                android:layout_marginRight="144dp"
+                android:background="@drawable/composer_thought"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <!-- 右下角处于收缩状态的快捷键按钮,另外这个还需要关注下点击时动画效果的代码 -->
+
+        <RelativeLayout
+            android:id="@+id/composer_buttons_show_hide_button"
+            android:layout_width="60dp"
+            android:layout_height="57.33333333333333dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/blue_cricle" >
+
+            <ImageView
+                android:id="@+id/composer_buttons_show_hide_button_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/composer_icn_plus" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>
