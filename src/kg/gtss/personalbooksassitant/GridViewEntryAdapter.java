@@ -8,6 +8,7 @@ import kg.gtss.alarm.AddReadingAlarm;
 
 import backuprestore.BackupRestoreActivity;
 
+import com.gtss.borrow.BrowReturnMainActivity;
 import com.gtss.useraccount.LocalAccountAuthenticatorActivity;
 import com.gtss.useraccount.UserAccountActivity;
 import com.progress.bookreading.ReadingProgressActivity;
@@ -36,7 +37,7 @@ public class GridViewEntryAdapter extends BaseAdapter {
 			R.drawable.composer_sleep, R.drawable.composer_thought,
 			R.drawable.composer_with, R.drawable.favorite,
 			R.drawable.favorite_not, R.drawable.composer_music,
-			R.drawable.composer_place };
+			R.drawable.composer_place, R.drawable.composer_sleep };
 	int mSize = drawables.length;
 	ArrayList<GridItem> mGridItems = new ArrayList<GridItem>();
 	Class[] classes = new Class[] { AddReadingAlarm.class,
@@ -46,7 +47,7 @@ public class GridViewEntryAdapter extends BaseAdapter {
 			LastReadBookActivity.class,
 			LocalAccountAuthenticatorActivity.class,
 			BackupRestoreActivity.class, SyncDataP2pActivity.class,
-			OnlineBookShopActivity.class };
+			OnlineBookShopActivity.class, BrowReturnMainActivity.class };
 
 	/**
 	 * a container

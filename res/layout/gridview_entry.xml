@@ -18,6 +18,7 @@
             android:horizontalSpacing="1dp"
             android:listSelector="@drawable/gridview_entry_selector"
             android:numColumns="3"
+            android:scrollbars="none"
             android:stretchMode="columnWidth"
             android:verticalSpacing="1dp" >
         </GridView>

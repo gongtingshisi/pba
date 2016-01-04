@@ -188,6 +188,7 @@
         <item>数据备份及同步</item>
         <item>与好友同步数据</item>
         <item>网上买书,货比三家</item>
+        <item>借阅归还</item>
     </string-array>
 
     <string name="add_alarm">添加闹钟</string>

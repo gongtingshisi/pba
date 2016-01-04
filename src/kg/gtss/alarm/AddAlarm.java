@@ -37,6 +37,7 @@ public class AddAlarm extends Activity implements OnClickListener {
 		Button ok = (Button) this.findViewById(R.id.add_reading_alarm_ok_btn);
 		mTimePicker = (TimePicker) this
 				.findViewById(R.id.add_reading_alarm_timer);
+		mTimePicker.setIs24HourView(true);
 		ok.setOnClickListener(this);
 		Button cancel = (Button) this
 				.findViewById(R.id.add_reading_alarm_cancel_btn);
