@@ -52,7 +52,8 @@ import android.widget.TextView;
 
 /**
  * INITIALIZE->DISCOVER->REQUEST->CONNECT->REQUEST CONNECTION
- * INFO.android:launchMode="singleTask"
+ * INFO.android:launchMode="singleTask".adb logcat pba:v WifiP2pManager:v
+ * WifiP2pService:v *:s
  * */
 public class SyncDataP2pActivity extends Activity {
 	// adb logcat wifidirectdemo:v GroupOwnerSocketHandler:v
@@ -63,12 +64,123 @@ public class SyncDataP2pActivity extends Activity {
 	Channel mChannel;
 	IntentFilter mIntentFilter = new IntentFilter();
 	DeviceListFragment mDeviceListFragment;
+	WifiP2pDnsSdServiceRequest serviceRequest;
+	String DEVICE_NAME = "deviceName";
+	String DEVICE_STATUS = "deviceStatus";
 
 	public static final String TXTRECORD_PROP_AVAILABLE = "available";
-	String WifiP2pDnsSdServiceName = "pba_name";
+	String WifiP2pDnsSdServiceName = "_pba_name";
 	String WifiP2pDnsSdServiceType = "_presence._tcp";
 
 	// DeviceDetailFragment mDeviceDetailFragment;
+	private void startRegistration(String deviceName, String status) {
+		// information about your service.
+		Map record = new HashMap();
+		record.put(DEVICE_NAME, deviceName);
+		record.put(DEVICE_STATUS, status);
+
+		// Serviceinformation. Pass it an instance name, service type
+		// _protocol._transportlayer , and the map containing
+		// information other devices will want once they connect to this one.
+		WifiP2pDnsSdServiceInfo serviceInfo = WifiP2pDnsSdServiceInfo
+				.newInstance(WifiP2pDnsSdServiceName, WifiP2pDnsSdServiceType,
+						record);
+
+		// Add thelocal service, sending the service info, network channel,
+		// andlistener that will be used to indicate success or failure of
+		// therequest.
+		mWifiP2pManager.addLocalService(mChannel, serviceInfo,
+				new ActionListener() {
+					@Override
+					public void onSuccess() {
+						// Command successful! Code isn't necessarily needed
+						// here,
+						// Unless you want to update the UI or add logging
+						// statements.
+					}
+
+					@Override
+					public void onFailure(int arg0) {
+						// Command failed. Check for P2P_UNSUPPORTED, ERROR, or
+						// BUSY
+					}
+				});
+
+		discoverService();
+	}
+
+	private void discoverService() {
+		DnsSdTxtRecordListener txtListener = new DnsSdTxtRecordListener() {
+
+			@Override
+			public void onDnsSdTxtRecordAvailable(String domain,
+					Map<String, String> record, WifiP2pDevice device) {
+				// TODO Auto-generated method stub
+				Log.d(this, "DnsSdTxtRecord available -" + record.toString());
+			}
+		};
+		DnsSdServiceResponseListener servListener = new DnsSdServiceResponseListener() {
+
+			@Override
+			public void onDnsSdServiceAvailable(String instanceName,
+					String registrationType, WifiP2pDevice device) {
+				// TODO Auto-generated method stub
+				Log.d(this, "onBonjourServiceAvailable " + instanceName);
+				if (WifiP2pDnsSdServiceName.equals(instanceName)) {
+
+					WifiP2pConfig config = new WifiP2pConfig();
+					config.deviceAddress = device.deviceAddress;
+					config.wps.setup = WpsInfo.PBC;
+
+					if (serviceRequest != null)
+						mWifiP2pManager.removeServiceRequest(mChannel,
+								serviceRequest, new ActionListener() {
+
+									@Override
+									public void onSuccess() {
+										Log.v(this, "停止搜索服务成功...");
+									}
+
+									@Override
+									public void onFailure(int arg0) {
+										Log.v(this, "停止搜索服务失败,错误码:" + arg0);
+									}
+								});
+
+					mWifiP2pManager.connect(mChannel, config,
+							mDeviceListFragment);
+				}
+			}
+		};
+
+		mWifiP2pManager.setDnsSdResponseListeners(mChannel, servListener,
+				txtListener);
+
+		serviceRequest = WifiP2pDnsSdServiceRequest.newInstance();
+		mWifiP2pManager.addServiceRequest(mChannel, serviceRequest,
+				new ActionListener() {
+					@Override
+					public void onSuccess() {
+						// Success!
+					}
+
+					@Override
+					public void onFailure(int code) {
+						// Command failed. Check forP2P_UNSUPPORTED, ERROR, or
+						// BUSY
+					}
+				});
+		mWifiP2pManager.discoverServices(mChannel, new ActionListener() {
+			@Override
+			public void onSuccess() {
+				// Success!
+			}
+
+			@Override
+			public void onFailure(int code) {
+			}
+		});
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,136 +193,17 @@ public class SyncDataP2pActivity extends Activity {
 		this.setContentView(R.layout.wifip2p_state);
 		mDeviceListFragment = (DeviceListFragment) this.getFragmentManager()
 				.findFragmentById(R.id.frag_list);
-		// mDeviceDetailFragment = (DeviceDetailFragment) this
-		// .getFragmentManager().findFragmentById(R.id.frag_detail);
 
 		initIntentFilter();
 
 		mWifiP2pManager = (WifiP2pManager) this
 				.getSystemService(Service.WIFI_P2P_SERVICE);
 
-		Log.v(this, "initialize channel...");
+		Log.v(this, "initialize channel...");// WIFI_P2P_THIS_DEVICE_CHANGED_ACTION
 		mChannel = mWifiP2pManager.initialize(this, this.getMainLooper(),
 				mDeviceListFragment);// 1.INITIALIZE
 
-		Log.v(this, "initialize discover ...");
-		mWifiP2pManager.discoverPeers(mChannel, mDiscoverActionListener);// 2.DISCOVER
-
-		// initService();
-
 		this.registerReceiver(mWifiP2pMsgReceiver, mIntentFilter);
-	}
-
-	ActionListener mDiscoverActionListener = new ActionListener() {
-
-		@Override
-		public void onFailure(int reason) {
-			// TODO Auto-generated method stub
-			// Log.v(this, "mDiscoverActionListener OnFailure " + reason);
-			switch (reason) {
-			case WifiP2pManager.P2P_UNSUPPORTED:
-				// set error state
-				mDeviceListFragment.setLocalStatus("Fail:P2P_UNSUPPORTED");
-				break;
-			case WifiP2pManager.ERROR:
-				mDeviceListFragment.setLocalStatus("Fail:ERROR");
-				break;
-			case WifiP2pManager.BUSY:
-				mDeviceListFragment.setLocalStatus("Fail:BUSY");
-				break;
-			}
-		}
-
-		@Override
-		public void onSuccess() {
-			// TODO Auto-generated method stub
-
-			// set Available state
-			mDeviceListFragment
-					.setLocalStatus(getDeviceStatus(WifiP2pDevice.AVAILABLE));
-		}
-	};
-
-	void initService() {
-
-		Map<String, String> record = new HashMap<String, String>();
-		record.put(TXTRECORD_PROP_AVAILABLE, "visible");
-		WifiP2pDnsSdServiceInfo p2pDnsService = WifiP2pDnsSdServiceInfo
-				.newInstance(WifiP2pDnsSdServiceName, WifiP2pDnsSdServiceType,
-						record);
-		mWifiP2pManager.addLocalService(mChannel, p2pDnsService,
-				new ActionListener() {
-
-					@Override
-					public void onFailure(int arg0) {
-						// TODO Auto-generated method stub
-						Log.v(this, "添加本地搜索服务失败..." + arg0);
-					}
-
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						Log.v(this, "添加本地搜索服务成功...");
-					}
-				});
-		mWifiP2pManager.setDnsSdResponseListeners(mChannel,
-				new DnsSdServiceResponseListener() {
-
-					@Override
-					public void onDnsSdServiceAvailable(String instanceName,
-							String registrationType, WifiP2pDevice srcDevice) {
-						// TODO Auto-generated method stub
-						Log.v(this, "onDnsSdServiceAvailable...");
-						if (instanceName.equals(WifiP2pDnsSdServiceName)) {
-							Log.v(this, "找到" + WifiP2pDnsSdServiceName
-									+ "服务...设备名称:" + srcDevice.deviceName
-									+ "		设备地址:" + srcDevice.deviceAddress
-									+ "		设备状态:"
-									+ getDeviceStatus(srcDevice.status));
-						}
-					}
-				}, new DnsSdTxtRecordListener() {
-
-					@Override
-					public void onDnsSdTxtRecordAvailable(
-							String fullDomainName, Map<String, String> record,
-							WifiP2pDevice device) {
-						// TODO Auto-generated method stub
-						Log.v(this, "onDnsSdTxtRecordAvailable...");
-					}
-				});
-		WifiP2pDnsSdServiceRequest serviceRequest = WifiP2pDnsSdServiceRequest
-				.newInstance(WifiP2pDnsSdServiceName, WifiP2pDnsSdServiceType);
-		mWifiP2pManager.addServiceRequest(mChannel, serviceRequest,
-				new ActionListener() {
-
-					@Override
-					public void onFailure(int arg0) {
-						// TODO Auto-generated method stub
-						Log.v(this, "增加服务请求失败...");
-					}
-
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						Log.v(this, "增加请求服务成功...");
-					}
-				});
-		mWifiP2pManager.discoverServices(mChannel, new ActionListener() {
-
-			@Override
-			public void onFailure(int arg0) {
-				// TODO Auto-generated method stub
-				Log.v(this, "初始化搜索服务失败,错误码:" + arg0);
-			}
-
-			@Override
-			public void onSuccess() {
-				// TODO Auto-generated method stub
-				Log.v(this, "初始化搜索服务成功...");
-			}
-		});
-
 	}
 
 	@Override
@@ -255,160 +248,14 @@ public class SyncDataP2pActivity extends Activity {
 				.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 	}
 
-	/**
-	 * get device state
-	 * */
-	public static String getDeviceStatus(int deviceStatus) {
-		String state;
-		switch (deviceStatus) {
-		case WifiP2pDevice.AVAILABLE:// 3
-			state = "Available";
-		case WifiP2pDevice.INVITED:// 1
-			state = "Invited";
-		case WifiP2pDevice.CONNECTED:// 0
-			state = "Connected";
-		case WifiP2pDevice.FAILED:// 2
-			state = "Failed";
-		case WifiP2pDevice.UNAVAILABLE:// 4
-			state = "Unavailable";
-		default:
-			state = "Unknown";
-		}
-		return state;
-	}
 
-	/**
-	 * server side:save data
-	 * */
-	public class ServerSideSaveDataTask extends AsyncTask {
-
-		@Override
-		protected Object doInBackground(Object... arg0) {
-			// TODO Auto-generated method stub
-			try {
-				// use port on server side
-				ServerSocket server = new ServerSocket(8000);
-				Log.v(this, "address:"
-						+ server.getInetAddress().getHostAddress() + ":"
-						+ server.getLocalPort());
-
-				// accept a client connection
-				Socket client = server.accept();
-
-				// store the data from client
-				final File f = new File(
-						Environment.getExternalStorageDirectory() + "/"
-								+ mContext.getPackageName() + "/wifip2pshared-"
-								+ System.currentTimeMillis() + ".jpg");
-				File dirs = new File(f.getParent());
-				if (!dirs.exists())
-					dirs.mkdirs();
-				f.createNewFile();
-				InputStream inputstream = client.getInputStream();
-				FileUtils.copyBigDataTo(inputstream, f.getAbsolutePath());
-
-				// close server
-				server.close();
-				return f.getAbsolutePath();
-			} catch (IOException e) {
-				Log.v(this, e.getMessage());
-				return null;
-			}
-
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			// TODO Auto-generated method stub
-			if (result != null) {
-				Log.v(this, "copy sucess !");
-				// open file with gallery
-				Intent intent = new Intent();
-				intent.setAction(android.content.Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.parse("file://" + result), "image/*");
-				mContext.startActivity(intent);
-			}
-
-		}
-
-	}
-
-	/**
-	 * client side :transfer data
-	 * */
-	public class ClientSideTransferDataTask extends AsyncTask {
-
-		@Override
-		protected Object doInBackground(Object... arg0) {
-			// TODO Auto-generated method stub
-
-			String host = "5e:f8:a1:12:ce:1c";
-			int port = 0;
-			int len;
-			Socket socket = new Socket();
-			byte buf[] = new byte[1024];
-
-			try {
-				/**
-				 * Create a client socket with the host, port, and timeout
-				 * information.
-				 */
-				socket.bind(null);
-				socket.connect((new InetSocketAddress(host, port)), 500);
-
-				/**
-				 * Create a byte stream from a JPEG file and pipe it to the
-				 * output stream of the socket. This data will be retrieved by
-				 * the server device.
-				 */
-				OutputStream outputStream = socket.getOutputStream();
-				ContentResolver cr = mContext.getContentResolver();
-				InputStream inputStream = null;
-				inputStream = cr.openInputStream(Uri
-						.parse("path/to/picture.jpg"));
-				while ((len = inputStream.read(buf)) != -1) {
-					outputStream.write(buf, 0, len);
-				}
-				outputStream.close();
-				inputStream.close();
-			} catch (FileNotFoundException e) {
-				// catch logic
-			} catch (IOException e) {
-				// catch logic
-			}
-
-			/**
-			 * Clean up any open sockets when done transferring or if an
-			 * exception occurred.
-			 */
-			finally {
-				if (socket != null) {
-					if (socket.isConnected()) {
-						try {
-							socket.close();
-						} catch (IOException e) {
-							// catch logic
-						}
-					}
-				}
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 
 	public class WifiP2pMsgReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context arg0, Intent intent) {
 			// TODO Auto-generated method stub
-			/* Log.v(this, "onReceive " + intent.getAction()); */
+			Log.v(this, "onReceive " + intent.getAction());
 
 			String action = intent.getAction();
 			if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
@@ -416,27 +263,28 @@ public class SyncDataP2pActivity extends Activity {
 				int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE,
 						-1);
 				if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
-					Log.v(this, "WifiP2pManager.WIFI_P2P_STATE_ENABLED");
-					// activity.setIsWifiP2pEnabled(true);
+					Log.v(this, "WifiP2p enabled ...");
+
 				} else {
-					Log.v(this, "WifiP2pManager.WIFI_P2P_STATE_DISABLED ");
-					// activity.setIsWifiP2pEnabled(false);
+					Log.v(this, "WifiP2p disenabled ... ");
+
 				}
 
 			} else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION
 					.equals(action)) {
 				// 对等点列表已经改变
 				// Log.v(this, "request peers...");
-				mWifiP2pManager.requestPeers(mChannel, mDeviceListFragment);// 3.REQUEST
-																			// PEERS
+				// mWifiP2pManager.requestPeers(mChannel,
+				// mDeviceListFragment);// 3.REQUEST
+				// PEERS
 				// set Invited status,waiting to accepted
 				mDeviceListFragment
-						.setLocalStatus(getDeviceStatus(WifiP2pDevice.AVAILABLE));
+						.setLocalStatus(WifiP2pDevice.AVAILABLE + "");
 
 			} else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION
 					.equals(action)) {
 				// 表示此处已经p2p连接上了
-				Log.v(this, "connection changed~");
+
 				WifiP2pInfo wifiP2pInfo = (WifiP2pInfo) intent
 						.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_INFO);
 				if (wifiP2pInfo != null
@@ -458,18 +306,20 @@ public class SyncDataP2pActivity extends Activity {
 
 					mWifiP2pManager.requestConnectionInfo(mChannel,
 							mDeviceListFragment);// 5.REQUEST CONNECTION
-													// INFO
+					// INFO
 				}
 			} else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION
 					.equals(action)) {
 				// 用来获取本地设备信息的接口
-				Log.v(this, "Getting local device info ...");
+
 				WifiP2pDevice device = (WifiP2pDevice) intent
 						.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
-
+				Log.v(this, "Getting local device info ..." + device.deviceName
+						+ ":" + device.status);
 				mDeviceListFragment.setLocalNameStatus(device.deviceName,
-						getDeviceStatus(device.status));
+						device.status + "");
 
+				startRegistration(device.deviceName, device.status + "");
 			} else if (WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION
 					.equals(action)) {
 				int state = intent.getIntExtra(
