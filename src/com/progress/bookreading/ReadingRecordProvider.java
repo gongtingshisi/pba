@@ -135,9 +135,9 @@ public class ReadingRecordProvider extends ContentProvider {
 		default:
 			throw new IllegalArgumentException("Unknown URL " + url);
 		}
-
-		Cursor c = mSQLiteDatabase.query(TABLE, proj, select, args, null, null,
+		Cursor c = qb.query(mSQLiteDatabase, proj, select, args, null, null,
 				order);
+
 		if (null == c) {
 			Log.v(this, "query " + TABLE + " fails ~");
 		} else {

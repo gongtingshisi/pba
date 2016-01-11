@@ -16,6 +16,9 @@ public class ReadingRecordDbHelper extends SQLiteOpenHelper {
 	public static String DB_NAME = "reading.db";
 	final public static String TableName_reading_record = "reading";
 	private static int DATABASE_VERSION = 1;
+
+	private static String DROP = "drop table if exists "
+			+ TableName_reading_record;
 	// create table.INTEGER PRIMARY KEY,
 	private static String TABLE_CREATE = "create table "
 			+ TableName_reading_record + "(" + DatabaseBookInterface._ID
@@ -51,8 +54,8 @@ public class ReadingRecordDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		// TODO Auto-generated method stub
-		db.execSQL(TableName_reading_record);
+		db.execSQL(DROP);
+
 		onCreate(db);
 	}
-
 }

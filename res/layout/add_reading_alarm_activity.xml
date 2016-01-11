@@ -1,73 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/add_reading_alarm_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/add_reading_alarm_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/add_reading_alarm_ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:text="保存" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/add_alarm" />
+
+        <Button
+            android:id="@+id/add_reading_alarm_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:text="取消" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_reading_alarm_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_reading_alarm_btn"
+        android:layout_margin="20dp"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/add_reading_alarm_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/add_reading_alarm_ok_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="保存" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/add_alarm" />
-
-            <Button
-                android:id="@+id/add_reading_alarm_cancel_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="取消" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/add_reading_alarm_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/add_reading_alarm_btn"
             android:layout_margin="10dp"
             android:orientation="vertical" >
 
-            <TextView
+            <View
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="拨动选择日期" />
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="@color/lightgrey" >
+            </View>
 
-            <DatePicker
-                android:id="@+id/add_reading_alarm_date"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:calendarViewShown="false" />
+            <!-- 绘制点击设置 日期 -->
 
-            <TextView
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="拨动选择时间" />
+                android:layout_height="50dp"
+                android:layout_marginLeft="35dp"
+                android:orientation="horizontal" >
 
-            <TimePicker
-                android:id="@+id/add_reading_alarm_timer"
+                <TextView
+                    android:id="@+id/setting_date"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="点击选择日期"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/display_date"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="16dp" >
+                </TextView>
+            </LinearLayout>
+
+            <View
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" >
-            </TimePicker>
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="@color/lightgrey" >
+            </View>
+            <!-- 绘制点击设置时间 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="35dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/setting_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="点击选择时间"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/display_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="16dp" >
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="@color/lightgrey" >
+            </View>
         </LinearLayout>
 
         <fragment
@@ -79,4 +137,4 @@
         </fragment>
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>

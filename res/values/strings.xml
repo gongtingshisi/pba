@@ -226,5 +226,7 @@
     <string name="p2p_use_notice">使用须知:只有同时当正在wifi direct p2p搜索的小伙伴才会显示到本地列表中呃~点击小伙伴列表邀请他们加入这个组吧~</string>
     <string name="connect">连接</string>
     <string name="disconnect">断开</string>
+    <string name="setting_time">设置时间</string>
+    <string name="setting_date">设置日期</string>
 
 </resources>
