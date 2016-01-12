@@ -199,6 +199,7 @@
     <string name="off">关闭</string>
     <string name="vibrate">振动</string>
     <string name="comment">备注</string>
+    <string name="mute">静音</string>
 
     <string-array name="days">
         <item>周一</item>

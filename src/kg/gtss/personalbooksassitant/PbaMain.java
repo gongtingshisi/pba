@@ -432,7 +432,7 @@ public class PbaMain extends FragmentActivity implements OnTouchListener {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		// TODO Auto-generated method stub
-	 
+
 		switch (item.getItemId()) {
 		case MENU_SCAN:
 			menuScanBookItem = item;
@@ -476,7 +476,7 @@ public class PbaMain extends FragmentActivity implements OnTouchListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
- 
+
 		menu.add(Menu.NONE, MENU_SCAN, MENU_SCAN,
 				this.getString(R.string.scan_books)).setIcon(
 				this.getResources().getDrawable(R.drawable.composer_button));
@@ -667,8 +667,10 @@ public class PbaMain extends FragmentActivity implements OnTouchListener {
 							&& null != data.isbn) {
 						// mHandler.sendEmptyMessage(MESSAGE_FETCH_BOOK_ISBN);
 						ScannedISBN = data.isbn;
-						((BooksGatherFragment) mFragmentList
-								.get(mCurrentpageIndex)).searchBook(data.isbn);
+						if (mFragmentList.get(mCurrentpageIndex) instanceof BooksGatherFragment)
+							((BooksGatherFragment) mFragmentList
+									.get(mCurrentpageIndex))
+									.searchBook(data.isbn);
 						return;
 					}
 				}

@@ -229,7 +229,7 @@ SHA1: 65:38:79:16:16:70:17:DD:1D:FA:54:8F:F3:07:FE:1E:16:7B:87:67
             android:exported="false" />
         <provider
             android:name="kg.gtss.alarm.ReadingAlarmContentProvider"
-            android:authorities="kg.gtss.alarm.ReadingAlarmContentProvider"
+            android:authorities="kg.gtss.personalbooksassitant.ReadingAlarmContentProvider"
             android:exported="false" >
         </provider>
     </application>

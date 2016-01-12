@@ -40,6 +40,7 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	@Override
 	public int delete(Uri url, String where, String[] whereArgs) {
 		// TODO Auto-generated method stub
+		Log.v(this, "delete " + url);
 		int match = sURLMatcher.match(url);
 		int count = -1;
 		switch (match) {
@@ -84,7 +85,7 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	public Cursor query(Uri url, String[] proj, String select, String[] args,
 			String order) {
 		// TODO Auto-generated method stub
-
+		Log.v(this, "query " + url);
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		// Generate the body of the query
 		int match = sURLMatcher.match(url);
@@ -130,7 +131,7 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	public int update(Uri url, ContentValues value, String where,
 			String[] whereArgs) {
 		// TODO Auto-generated method stub
-
+		Log.v(this, "update " + url);
 		int count = -1;
 		int match = sURLMatcher.match(url);
 		Log.v(this,
@@ -156,7 +157,7 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri url, ContentValues values) {
 		// TODO Auto-generated method stub
-
+		Log.v(this, "insert " + url);
 		// cannot insert a special id,id assigned by database
 		if (sURLMatcher.match(url) != ALARM) {
 			throw new IllegalArgumentException("Unknown " + TABLE + " URL:"

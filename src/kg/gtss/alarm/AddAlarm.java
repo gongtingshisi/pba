@@ -51,10 +51,20 @@ public class AddAlarm extends Activity implements OnClickListener {
 		}
 	};
 
+	void initDateTime() {
+		Calendar c = Calendar.getInstance();
+		year = c.get(Calendar.YEAR);
+		month = c.get(Calendar.MONTH);
+		day = c.get(Calendar.DAY_OF_MONTH);
+		hour = c.get(Calendar.HOUR_OF_DAY);
+		minute = c.get(Calendar.MINUTE);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		/*
 		 * this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -129,6 +139,7 @@ public class AddAlarm extends Activity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		initDateTime();
 	}
 
 	@Override

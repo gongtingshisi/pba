@@ -20,6 +20,12 @@
         android:key="vibrate"
         android:title="@string/vibrate" >
     </SwitchPreference>
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/composer_music"
+        android:key="mute"
+        android:title="@string/mute" >
+    </SwitchPreference>
 
     <EditTextPreference
         android:dialogTitle="@string/comment"

@@ -8,6 +8,8 @@ import kg.gtss.utils.Log;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -21,8 +23,20 @@ import android.widget.TimePicker;
 
 public class AddAlarmFragment extends PreferenceFragment implements
 		OnPreferenceChangeListener {
+
+	Uri URI = ReadingAlarmContentProvider.CONTENT_URI;
+	String COLUMN_ID = ReadingAlarmSQLiteOpenHelper.Columns._ID;
+	String COLUMN_ON = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_ON;
+	String COLUMN_VIBRATE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_VIBRATE;
+	String COLUMN_COMMENT = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_COMMENT;
+	String COLUMN_TIME = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_TIME;
+	String COLUMN_MUTE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_MUTE;
+	String[] PROJECTION = { COLUMN_ID, COLUMN_ON, COLUMN_VIBRATE,
+			COLUMN_COMMENT, COLUMN_TIME, COLUMN_MUTE };
+
 	SwitchPreference mSwitchPreference;
 	SwitchPreference mVibrateSwitchPreference;
+	SwitchPreference mMuteSwitchPreference;
 	EditTextPreference mEditTextPreference;
 	// PreferenceScreen mDateSetting, mTimeSetting;
 
@@ -31,6 +45,8 @@ public class AddAlarmFragment extends PreferenceFragment implements
 	final String ON = "switch";
 	final String VIBRATE = "vibrate";
 	final String COMMENT = "comment";
+	final String MUTE = "mute";
+
 	private DatePickerDialog.OnDateSetListener Datelistener = new DatePickerDialog.OnDateSetListener() {
 
 		@Override
@@ -57,6 +73,7 @@ public class AddAlarmFragment extends PreferenceFragment implements
 
 		final Calendar c = Calendar.getInstance();
 		mSwitchPreference = (SwitchPreference) this.findPreference(ON);
+		mMuteSwitchPreference = (SwitchPreference) this.findPreference(MUTE);
 		/*
 		 * mDateSetting = (PreferenceScreen) this.findPreference(DATE);
 		 * mDateSetting .setOnPreferenceClickListener(new
@@ -88,9 +105,26 @@ public class AddAlarmFragment extends PreferenceFragment implements
 		boolean on = mSwitchPreference.isChecked();
 		boolean vibrate = mVibrateSwitchPreference.isChecked();
 		String comment = mEditTextPreference.getEditText().getText().toString();
+		boolean mute = mMuteSwitchPreference.isChecked();
 		Log.v(this, "save Year:" + year + " Month:" + month + " Day:" + day
 				+ " Hour:" + hour + " Minute:" + minute + " on:" + on
-				+ " vibrate:" + vibrate + " comment:" + comment);
+				+ " vibrate:" + vibrate + " comment:" + comment + "	mute:"
+				+ mute);
+		// /////////////////////
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.YEAR, year);
+		c.set(Calendar.MONTH, month);
+		c.set(Calendar.DAY_OF_MONTH, day);
+		c.set(Calendar.HOUR_OF_DAY, hour);
+		c.set(Calendar.MINUTE, minute);
+
+		ContentValues value = new ContentValues();
+		value.put(COLUMN_ON, on);
+		value.put(COLUMN_VIBRATE, vibrate);
+		value.put(COLUMN_COMMENT, comment);
+		value.put(COLUMN_MUTE, mute);
+		value.put(COLUMN_TIME, c.getTimeInMillis());
+		this.getActivity().getContentResolver().insert(URI, value);
 	}
 
 	@Override
