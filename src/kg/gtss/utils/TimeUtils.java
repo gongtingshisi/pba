@@ -35,6 +35,24 @@ public class TimeUtils {
 		return formatter.format(new Date(System.currentTimeMillis()));
 	}
 
+	public static Calendar getCalendarFromLongTime(long time) {
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(time);
+		return c;
+	}
+
+	public static String getTimeFromCalendar(Calendar cal) {
+		return cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+	}
+
+	/**
+	 * MONTH+1 !
+	 * */
+	public static String getDateFromCalendar(Calendar cal) {
+		return cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1)
+				+ "/" + cal.get(Calendar.DAY_OF_MONTH);
+	}
+
 	/**
 	 * MM/dd/yyyy
 	 * */

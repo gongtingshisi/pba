@@ -64,6 +64,16 @@ public class AddAlarmFragment extends PreferenceFragment implements
 		}
 	};
 
+	/**
+	 * initialize our preferences
+	 * */
+	public void init(int on, int vibrate, int mute, String comment) {
+		mSwitchPreference.setChecked(1 == on);
+		mVibrateSwitchPreference.setChecked(1 == vibrate);
+		mMuteSwitchPreference.setChecked(1 == mute);
+		mEditTextPreference.setSummary(comment);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

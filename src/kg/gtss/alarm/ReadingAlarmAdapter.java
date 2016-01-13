@@ -10,6 +10,7 @@ import kg.gtss.personalbooksassitant.R;
 import kg.gtss.personalbooksassitant.R.id;
 import kg.gtss.personalbooksassitant.R.layout;
 import kg.gtss.utils.Log;
+import kg.gtss.utils.TimeUtils;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -18,6 +19,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,41 +53,37 @@ public class ReadingAlarmAdapter extends CursorAdapter {
 
 	}
 
-	Calendar getCalendarFromLongTime(long time) {
-		Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(time);
-		return c;
-	}
-
 	@Override
 	public void bindView(View v, Context context, Cursor c) {
 		// TODO Auto-generated method stub
-		final Cursor cur = c;
+
 		if (c == null)
 			return;
-		if (c.getPosition() >= c.getCount())
+		final int pos = c.getPosition();
+		if (pos >= c.getCount())
 			return;
+		// 如果将Cursor复制给另一个Cursor,会存在游标移动到最后的情况,所以不要这么做
+		final int id = c.getInt(c.getColumnIndex(COLUMN_ID));
+		final int on = c.getInt(c.getColumnIndex(COLUMN_ON));
+		final int mute = c.getInt(c.getColumnIndex(COLUMN_MUTE));
+		final int vibrate = c.getInt(c.getColumnIndex(COLUMN_VIBRATE));
+		final String comment = c.getString(c.getColumnIndex(COLUMN_COMMENT));
+		final long time = c.getLong(c.getColumnIndex(COLUMN_TIME));
 
 		v.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Log.v(ReadingAlarmAdapter.this, "onclick " + cur.getPosition());
+
 				Intent i = new Intent();
 
-				i.putExtra(COLUMN_ID, cur.getInt(cur.getColumnIndex(COLUMN_ID))
-						+ "");
-				i.putExtra(COLUMN_ON, cur.getInt(cur.getColumnIndex(COLUMN_ON))
-						+ "");
-				i.putExtra(COLUMN_MUTE,
-						cur.getInt(cur.getColumnIndex(COLUMN_MUTE)) + "");
-				i.putExtra(COLUMN_VIBRATE,
-						cur.getInt(cur.getColumnIndex(COLUMN_VIBRATE)) + "");
-				i.putExtra(COLUMN_COMMENT,
-						cur.getInt(cur.getColumnIndex(COLUMN_COMMENT)) + "");
-				i.putExtra(COLUMN_TIME,
-						cur.getInt(cur.getColumnIndex(COLUMN_TIME)) + "");
+				i.putExtra(COLUMN_ID, id);
+				i.putExtra(COLUMN_ON, on);
+				i.putExtra(COLUMN_MUTE, mute);
+				i.putExtra(COLUMN_VIBRATE, vibrate);
+				i.putExtra(COLUMN_COMMENT, comment);
+				i.putExtra(COLUMN_TIME, time);
 
 				i.setClass(mContext, AddAlarm.class);
 				mContext.startActivity(i);
@@ -96,23 +94,19 @@ public class ReadingAlarmAdapter extends CursorAdapter {
 			@Override
 			public boolean onLongClick(View arg0) {
 				// TODO Auto-generated method stub
-				Log.v(ReadingAlarmAdapter.this,
-						"onLongClick " + cur.getPosition());
+
 				return true;
 			}
 		});
 
-		Calendar cal = getCalendarFromLongTime(c.getLong(c
+		Calendar cal = TimeUtils.getCalendarFromLongTime(c.getLong(c
 				.getColumnIndex(COLUMN_TIME)));
 
 		ViewHolder holder = new ViewHolder();
 		holder.time = (TextView) v.findViewById(R.id.alarm_time);
-		holder.time.setText(cal.get(Calendar.HOUR_OF_DAY) + ":"
-				+ cal.get(Calendar.MINUTE));
+		holder.time.setText(TimeUtils.getTimeFromCalendar(cal));
 		holder.days = (TextView) v.findViewById(R.id.alarm_days);
-		holder.days.setText(cal.get(Calendar.YEAR) + "/"
-				+ (cal.get(Calendar.MONTH) + 1) + "/"
-				+ cal.get(Calendar.DAY_OF_MONTH));
+		holder.days.setText(TimeUtils.getDateFromCalendar(cal));
 		holder.content = (TextView) v.findViewById(R.id.alarm_content);
 		holder.content.setText(c.getString(c.getColumnIndex(COLUMN_COMMENT)));
 		holder.onoff = (ImageView) v.findViewById(R.id.alarm_switch);
@@ -146,6 +140,8 @@ public class ReadingAlarmAdapter extends CursorAdapter {
 		TextView days;
 		TextView content;
 		ImageView onoff;
+		ImageView mute;
+		ImageView vibrate;
 	}
 
 }
