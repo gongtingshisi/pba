@@ -41,6 +41,7 @@ public class ReadingAlarmAdapter extends CursorAdapter {
 	String COLUMN_COMMENT = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_COMMENT;
 	String COLUMN_TIME = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_TIME;
 	String COLUMN_MUTE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_MUTE;
+
 	String[] PROJECTION = { COLUMN_ID, COLUMN_ON, COLUMN_VIBRATE,
 			COLUMN_COMMENT, COLUMN_TIME, COLUMN_MUTE };
 
@@ -123,6 +124,12 @@ public class ReadingAlarmAdapter extends CursorAdapter {
 
 			}
 		});
+		holder.mute = (ImageView) v.findViewById(R.id.alarm_mute);
+		if (1 == mute)
+			holder.mute.setImageResource(R.drawable.alarm_mute);
+		holder.vibrate = (ImageView) v.findViewById(R.id.alarm_vibrate);
+		if (1 == vibrate)
+			holder.vibrate.setImageResource(R.drawable.alarm_vibrate);
 		v.setTag(holder);
 
 	}

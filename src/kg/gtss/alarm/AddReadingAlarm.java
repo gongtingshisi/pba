@@ -40,6 +40,7 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 	String COLUMN_COMMENT = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_COMMENT;
 	String COLUMN_TIME = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_TIME;
 	String COLUMN_MUTE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_MUTE;
+
 	String[] PROJECTION = { COLUMN_ID, COLUMN_ON, COLUMN_VIBRATE,
 			COLUMN_COMMENT, COLUMN_TIME, COLUMN_MUTE };
 	int LOADER_ID = Common.LOADER_ID_AddReadingAlarm;

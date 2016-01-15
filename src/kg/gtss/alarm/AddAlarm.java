@@ -135,7 +135,7 @@ public class AddAlarm extends Activity implements OnClickListener {
 		});
 
 		// initialize fragment if needed
-		if (null != getIntent()) {
+		if (null != getIntent() && null != getIntent().getExtras()) {
 			int id = (int) getIntent().getExtras().getInt(COLUMN_ID);
 			String comment = this.getIntent().getExtras()
 					.getString(COLUMN_COMMENT);
