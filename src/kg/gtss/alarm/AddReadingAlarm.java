@@ -1,8 +1,6 @@
 package kg.gtss.alarm;
 
 import kg.gtss.personalbooksassitant.R;
-import kg.gtss.personalbooksassitant.R.id;
-import kg.gtss.personalbooksassitant.R.layout;
 import kg.gtss.personalbooksassitant.ReadingNotesActivity;
 import kg.gtss.personalbooksassitant.TabSubView;
 import kg.gtss.utils.Common;
@@ -18,14 +16,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /**
  * add an alarm for reading
@@ -33,6 +26,7 @@ import android.widget.TextView;
 public class AddReadingAlarm extends Activity implements OnClickListener,
 		LoaderCallbacks<Cursor> {
 
+	ReadingAlarmAdapter mReadingAlarmAdapter;
 	Uri URI = ReadingAlarmContentProvider.CONTENT_URI;
 	String COLUMN_ID = ReadingAlarmSQLiteOpenHelper.Columns._ID;
 	String COLUMN_ON = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_ON;
@@ -40,9 +34,9 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 	String COLUMN_COMMENT = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_COMMENT;
 	String COLUMN_TIME = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_TIME;
 	String COLUMN_MUTE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_MUTE;
-
+	String COLUMN_PENDING_ID = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_PENDING_INTENT;
 	String[] PROJECTION = { COLUMN_ID, COLUMN_ON, COLUMN_VIBRATE,
-			COLUMN_COMMENT, COLUMN_TIME, COLUMN_MUTE };
+			COLUMN_COMMENT, COLUMN_TIME, COLUMN_MUTE, COLUMN_PENDING_ID };
 	int LOADER_ID = Common.LOADER_ID_AddReadingAlarm;
 
 	public ListView mListView;
@@ -55,7 +49,7 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 		public void onChange(boolean selfChange) {
 			// TODO Auto-generated method stub
 			super.onChange(selfChange);
-			Log.v(AddReadingAlarm.this, "onChange ,restartLoader ");
+			// Log.v(AddReadingAlarm.this, "onChange ,restartLoader ");
 			AddReadingAlarm.this.getLoaderManager().restartLoader(LOADER_ID,
 					null, AddReadingAlarm.this);
 		}
@@ -82,8 +76,16 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+
 		this.getContentResolver().registerContentObserver(URI, true,
 				mContentObserver);
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+
 	}
 
 	@Override
@@ -116,8 +118,7 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 			i.setClass(this, AddAlarm.class);
 			this.startActivity(i);
 			break;
-		// case R.id.add_alarm_settings_btn:
-		// break;
+
 		default:
 			break;
 		}
@@ -126,17 +127,20 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		// TODO Auto-generated method stub
-		Log.v(this, "onCreateLoader");
+		// Log.v(this, "onCreateLoader");
 		return new CursorLoader(this, URI, PROJECTION, null, null, null);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor c) {
 		// TODO Auto-generated method stub
+
 		Log.v(this, "onLoadFinished "
 				+ ((null == c) ? "null"
 						: (c.getCount() == 0 ? 0 : c.getCount())));
-		mListView.setAdapter(new ReadingAlarmAdapter(this, c));
+
+		mListView.setAdapter(mReadingAlarmAdapter = new ReadingAlarmAdapter(
+				this, c));
 	}
 
 	@Override
@@ -144,4 +148,5 @@ public class AddReadingAlarm extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
+
 }

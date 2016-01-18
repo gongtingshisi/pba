@@ -232,5 +232,12 @@
     <string name="reading_alarm_notice_content">阅读提醒: <xliff:g id="num">%s</xliff:g>,时间:<xliff:g id="num">%s</xliff:g></string>
     <string name="reading_alarm_notice_ticker">"你有<xliff:g id="num">%d</xliff:g>个阅读提醒哦,喵~"</string>
     <string name="reading_alarm_notice_title">个人阅读助手</string>
+    <string name="sure_delete">确认删除吗?</string>
+    <string name="not_allowed_open">不允许设置过时的闹钟哦~</string>
+    <string name="not_allowed_null">写点备忘提醒吧~</string>
+    <string name="delete">删除</string>
+    <string name="select">选择</string>
+    <string name="done">完成</string>
+    <string name="all">所有</string>
 
 </resources>

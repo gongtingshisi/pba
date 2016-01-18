@@ -59,6 +59,7 @@
             <!-- 绘制点击设置 日期 -->
 
             <LinearLayout
+                android:id="@+id/setting_date_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="35dp"
@@ -94,6 +95,7 @@
             <!-- 绘制点击设置时间 -->
 
             <LinearLayout
+                android:id="@+id/setting_time_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="35dp"

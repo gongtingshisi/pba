@@ -20,8 +20,10 @@ import android.view.Window;
 
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 //
 public class AddAlarm extends Activity implements OnClickListener {
@@ -31,9 +33,9 @@ public class AddAlarm extends Activity implements OnClickListener {
 	String COLUMN_COMMENT = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_COMMENT;
 	String COLUMN_TIME = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_TIME;
 	String COLUMN_MUTE = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_MUTE;
-
+	static String COLUMN_PENDING_ID = ReadingAlarmSQLiteOpenHelper.Columns.READING_ALARM_PENDING_INTENT;
 	int DefaultValue = -1;
-
+	int AlarmId = -1;
 	AddAlarmFragment mFragment;
 	TextView mSettingDate, mSettingTime, mDisplayDate, mDisplayTime;
 	int year, month, day, hour, minute;
@@ -71,7 +73,7 @@ public class AddAlarm extends Activity implements OnClickListener {
 	void setFields(Calendar c) {
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH) - 1;
+		day = c.get(Calendar.DAY_OF_MONTH);
 		hour = c.get(Calendar.HOUR_OF_DAY);
 		minute = c.get(Calendar.MINUTE);
 	}
@@ -106,7 +108,11 @@ public class AddAlarm extends Activity implements OnClickListener {
 		mDisplayTime.setText(TimeUtils.getTimeFromCalendar(c));
 
 		mSettingDate = (TextView) this.findViewById(R.id.setting_date);
-		mSettingDate.setOnClickListener(new OnClickListener() {
+		LinearLayout SettingDateLayout = (LinearLayout) this
+				.findViewById(R.id.setting_date_layout);
+		LinearLayout SettingTimeLayout = (LinearLayout) this
+				.findViewById(R.id.setting_time_layout);
+		SettingDateLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -120,7 +126,7 @@ public class AddAlarm extends Activity implements OnClickListener {
 			}
 		});
 		mSettingTime = (TextView) this.findViewById(R.id.setting_time);
-		mSettingTime.setOnClickListener(new OnClickListener() {
+		SettingTimeLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -136,19 +142,23 @@ public class AddAlarm extends Activity implements OnClickListener {
 
 		// initialize fragment if needed
 		if (null != getIntent() && null != getIntent().getExtras()) {
-			int id = (int) getIntent().getExtras().getInt(COLUMN_ID);
+
+			AlarmId = (int) getIntent().getExtras().getInt(COLUMN_ID);
 			String comment = this.getIntent().getExtras()
 					.getString(COLUMN_COMMENT);
 			long time = getIntent().getExtras().getLong(COLUMN_TIME);
 			int on = getIntent().getExtras().getInt(COLUMN_ON);
 			int vibrate = getIntent().getExtras().getInt(COLUMN_VIBRATE);
 			int mute = getIntent().getExtras().getInt(COLUMN_MUTE);
-
+			int pending_id = getIntent().getExtras().getInt(COLUMN_PENDING_ID);
 			// reset new date and time
-			Calendar cur = TimeUtils.getCalendarFromLongTime(time);
-			setFields(cur);
-			setDisplayDate(TimeUtils.getDateFromCalendar(cur));
-			setDisplayTime(TimeUtils.getTimeFromCalendar(cur));
+			Calendar cal = TimeUtils.getCalendarFromLongTime(time);
+			String yearmonthday = TimeUtils.getDateFromCalendar(cal);
+			String hourminte = TimeUtils.getTimeFromCalendar(cal);
+
+			setFields(cal);
+			setDisplayDate(yearmonthday);
+			setDisplayTime(hourminte);
 			mFragment.init(on, vibrate, mute, comment);
 		}
 	}
@@ -173,7 +183,9 @@ public class AddAlarm extends Activity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		initDateTime();
+		if (-1 == AlarmId) {
+			initDateTime();
+		}
 	}
 
 	@Override
@@ -190,6 +202,16 @@ public class AddAlarm extends Activity implements OnClickListener {
 	}
 
 	void save() {
-		mFragment.save(year, month, day, hour, minute);
+		// 不允许保存已经过时的闹钟
+		Calendar c = Calendar.getInstance();
+		// 为了使刚刚设定的闹钟生效,此处加一分钟.因为我不知道现在多少秒了
+		c.set(year, month, day, hour, minute /* + 1 */, 0);
+		// 对于已经过时的闹钟,我们不允许再打开,但是允许在外部列表关闭或者去闹钟详情界面修改.
+		if (c.getTimeInMillis() < System.currentTimeMillis()) {
+			Toast.makeText(this, R.string.not_allowed_open, Toast.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		mFragment.save(AlarmId, year, month, day, hour, minute);
 	}
 }

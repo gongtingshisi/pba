@@ -17,7 +17,8 @@ public class ReadingAlarmSQLiteOpenHelper extends SQLiteOpenHelper {
 		public static final String READING_ALARM_VIBRATE = "vibrate";
 		public static final String READING_ALARM_COMMENT = "comment";
 		public static final String READING_ALARM_MUTE = "mute";
-
+		// 用来操作pending intent的句柄
+		public static final String READING_ALARM_PENDING_INTENT = "pending_id";
 	}
 
 	public static final String READING_ALARM_DB_NAME = "reading_alarm.db";
@@ -31,7 +32,7 @@ public class ReadingAlarmSQLiteOpenHelper extends SQLiteOpenHelper {
 			+ Columns.READING_ALARM_TIME + " long not null,"
 			+ Columns.READING_ALARM_VIBRATE + " integer not null,"
 			+ Columns.READING_ALARM_COMMENT + " text not null,"
-
+			+ Columns.READING_ALARM_PENDING_INTENT + " integer not null,"
 			+ Columns.READING_ALARM_MUTE + " integer not null" + ")";
 
 	public ReadingAlarmSQLiteOpenHelper(Context context, String name,

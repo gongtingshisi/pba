@@ -14,6 +14,10 @@ public class StringUtil {
 		else
 			return false;
 	}
-	
-	 
+
+	public final static boolean isEmpty(String comment) {
+		return null == comment || 0 == comment.length()
+				|| null == comment.trim() || 0 == comment.trim().length();
+	}
+
 }

@@ -20,7 +20,7 @@ import android.text.TextUtils;
  * */
 public class ReadingAlarmContentProvider extends ContentProvider {
 	public static final String AUTHORITY = "kg.gtss.personalbooksassitant.ReadingAlarmContentProvider";
-
+	boolean DEBUG = false;
 	ReadingAlarmSQLiteOpenHelper mReadingAlarmSQLiteOpenHelper;
 	SQLiteDatabase mSQLiteDatabase;
 	Context mContext;
@@ -40,7 +40,8 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	@Override
 	public int delete(Uri url, String where, String[] whereArgs) {
 		// TODO Auto-generated method stub
-		Log.v(this, "delete " + url);
+		if (DEBUG)
+			Log.v(this, "delete " + url);
 		int match = sURLMatcher.match(url);
 		int count = -1;
 		switch (match) {
@@ -62,7 +63,7 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 			count = mSQLiteDatabase.delete(TABLE, where, whereArgs);
 			break;
 		}
-
+		getContext().getContentResolver().notifyChange(url, null);
 		return count;
 	}
 
@@ -85,7 +86,8 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	public Cursor query(Uri url, String[] proj, String select, String[] args,
 			String order) {
 		// TODO Auto-generated method stub
-		Log.v(this, "query " + url);
+		if (DEBUG)
+			Log.v(this, "query " + url);
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		// Generate the body of the query
 		int match = sURLMatcher.match(url);
@@ -99,8 +101,9 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 		case ALARM_ID:
 			qb.setTables(TABLE);
 			qb.appendWhere("_id=");
-			Log.v(this, "query " + TABLE + " of  id "
-					+ url.getPathSegments().get(1));
+			if (DEBUG)
+				Log.v(this, "query " + TABLE + " of  id "
+						+ url.getPathSegments().get(1));
 			qb.appendWhere(url.getPathSegments().get(1));
 			break;
 		default:
@@ -110,7 +113,8 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 		Cursor c = qb.query(mSQLiteDatabase, proj, select, args, null, null,
 				order);
 		if (null == c) {
-			Log.v(this, "query " + TABLE + " fails ~");
+			if (DEBUG)
+				Log.v(this, "query " + TABLE + " fails ~");
 		} else {
 			// !!???
 			c.setNotificationUri(this.getContext().getContentResolver(), url);
@@ -131,13 +135,15 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	public int update(Uri url, ContentValues value, String where,
 			String[] whereArgs) {
 		// TODO Auto-generated method stub
-		Log.v(this, "update " + url);
+		if (DEBUG)
+			Log.v(this, "update " + url);
 		int count = -1;
 		int match = sURLMatcher.match(url);
-		Log.v(this,
-				"update " + url + "  match:" + match + "   "
-						+ value.get(ReadingRecord.TYPE_title) + " "
-						+ value.get(ReadingRecord.TYPE_read));
+		if (DEBUG)
+			Log.v(this,
+					"update " + url + "  match:" + match + "   "
+							+ value.get(ReadingRecord.TYPE_title) + " "
+							+ value.get(ReadingRecord.TYPE_read));
 		switch (match) {
 		case ALARM:
 
@@ -149,7 +155,8 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 			throw new IllegalArgumentException("Unknown URL " + url);
 		}
 		count = mSQLiteDatabase.update(TABLE, value, where, whereArgs);
-		Log.v(this, "update result " + count);
+		if (DEBUG)
+			Log.v(this, "update result " + count);
 		getContext().getContentResolver().notifyChange(url, null);
 		return count;
 	}
@@ -157,7 +164,8 @@ public class ReadingAlarmContentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri url, ContentValues values) {
 		// TODO Auto-generated method stub
-		Log.v(this, "insert " + url);
+		if (DEBUG)
+			Log.v(this, "insert " + url);
 		// cannot insert a special id,id assigned by database
 		if (sURLMatcher.match(url) != ALARM) {
 			throw new IllegalArgumentException("Unknown " + TABLE + " URL:"
