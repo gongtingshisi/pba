@@ -46,5 +46,10 @@
         <attr name="reading_alarm_button_image" format="reference"></attr>
         <attr name="reading_alarm_button_text" format=" reference"></attr>
     </declare-styleable>
+    <!-- 用于提供给增新建笔记界面下方的按钮 -->
+    <declare-styleable name="reading_note_button">
+        <attr name="reading_note_button_image" format="reference"></attr>
+        <attr name="reading_note_button_text" format=" reference"></attr>
+    </declare-styleable>
 
 </resources>

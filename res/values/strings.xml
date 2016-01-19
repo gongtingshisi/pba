@@ -220,7 +220,6 @@
         <item>64</item>
     </string-array>
 
-    <string name="add_note">新建读书笔记</string>
     <string name="null_notice">囧~你连一个记录都木有~</string>
     <string name="peers">可见的小伙伴</string>
     <string name="local">本地设备</string>
@@ -239,5 +238,6 @@
     <string name="select">选择</string>
     <string name="done">完成</string>
     <string name="all">所有</string>
+    <string name="add_note">新建笔记</string>
 
 </resources>

@@ -19,6 +19,7 @@ public class Common {
 	public final static int LOADER_ID_AllBooksActivity = LOADER_ID_Start + 5;
 	public final static int LOADER_ID_LocalManagerFragment = LOADER_ID_Start + 6;
 	public final static int LOADER_ID_AddReadingAlarm = LOADER_ID_Start + 7;
+	public final static int LOADER_ID_ReadingNote = LOADER_ID_Start + 8;
 
 	public final static int SEARCH_BOOK_SUCESS = 0;
 	public final static int SEARCH_BOOK_FAIL_NO_NETWORK = 1;

@@ -90,7 +90,7 @@ import com.gtss.douban.DatabaseChangedCallback;
 import com.gtss.douban.DouBanDatabase;
 
 import com.gtss.useraccount.UserAccountActivity;
-import com.laomo.zxing.CaptureActivity;
+import com.kg.zxing.CaptureActivity;
 import com.progress.bookreading.ReadingProgressActivity;
 
 //import android.util.Log;

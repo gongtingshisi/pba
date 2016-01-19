@@ -24,7 +24,7 @@ public class ReadingAlarmSQLiteOpenHelper extends SQLiteOpenHelper {
 	public static final String READING_ALARM_DB_NAME = "reading_alarm.db";
 	public static final String READING_ALARM_TABLE = "reading_alarm";
 	private static int DB_VERSION = 1;
-	private String DROP = "drop it if exists " + READING_ALARM_TABLE;
+	private String DROP = "drop table if exists " + READING_ALARM_TABLE;
 	private String CREATE = "create table " + READING_ALARM_TABLE + "("
 			+ Columns._ID
 			+ " integer default '1' not null primary key autoincrement,"

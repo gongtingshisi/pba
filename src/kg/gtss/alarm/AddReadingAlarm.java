@@ -1,7 +1,7 @@
 package kg.gtss.alarm;
 
+import kg.gtss.note.ReadingNotesActivity;
 import kg.gtss.personalbooksassitant.R;
-import kg.gtss.personalbooksassitant.ReadingNotesActivity;
 import kg.gtss.personalbooksassitant.TabSubView;
 import kg.gtss.utils.Common;
 import kg.gtss.utils.Log;

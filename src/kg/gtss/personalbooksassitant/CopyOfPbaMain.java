@@ -100,7 +100,7 @@ import com.gtss.douban.DouBanDatabase;
 import com.gtss.douban.DouBanQuery;
 import com.gtss.douban.KgCursorLoader;
 import com.gtss.useraccount.UserAccountActivity;
-import com.laomo.zxing.CaptureActivity;
+import com.kg.zxing.CaptureActivity;
 import com.progress.bookreading.ReadingProgressActivity;
 
 //import android.util.Log;

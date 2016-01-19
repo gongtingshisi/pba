@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import syncdatap2p.SyncDataP2pActivity;
 
 import kg.gtss.alarm.AddReadingAlarm;
+import kg.gtss.note.ReadingNotesActivity;
 
 import backuprestore.BackupRestoreActivity;
 
