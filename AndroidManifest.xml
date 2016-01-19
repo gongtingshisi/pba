@@ -88,6 +88,7 @@ SHA1: 65:38:79:16:16:70:17:DD:1D:FA:54:8F:F3:07:FE:1E:16:7B:87:67
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -239,6 +240,14 @@ SHA1: 65:38:79:16:16:70:17:DD:1D:FA:54:8F:F3:07:FE:1E:16:7B:87:67
             android:name="kg.gtss.alarm.AddAlarmFragment$AlarmReceiver"
             android:process=":pba_remote" >
         </receiver>
+        <receiver android:name="kg.gtss.alarm.AlarmBootCompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="kg.gtss.alarm.AlarmService" >
+        </service>
     </application>
 
 </manifest>
