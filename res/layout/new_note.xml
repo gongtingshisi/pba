@@ -10,7 +10,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="5dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:cursorVisible="true"
+        android:gravity="top|left"
+        android:imeOptions="actionNone" />
 
     <kg.gtss.personalbooksassitant.TabSubView
         android:id="@+id/save_note_btn"
