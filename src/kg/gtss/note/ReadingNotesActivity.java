@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -47,7 +48,9 @@ public class ReadingNotesActivity extends ListActivity implements
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
+				Intent intent = new Intent(ReadingNotesActivity.this,
+						NewNoteActivity.class);
+				ReadingNotesActivity.this.startActivity(intent);
 			}
 		});
 	}
